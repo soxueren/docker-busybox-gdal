@@ -248,8 +248,7 @@ if [ -z "$JSSE_OPTS" ] ; then
   JSSE_OPTS="-Djdk.tls.ephemeralDHKeySize=2048"
 fi
 
-JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx4096m -XX:NewSize=512m -XX:MaxNewSize=512m -XX:OldSize=3192m -XX:+UseParallelGC -XX:+UseParallelOldGC -XX:-UseGCOverheadLimit -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/tomcat/dump/oom.hprof"
-
+JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx2048m"
 JAVA_OPTS="$JAVA_OPTS $JSSE_OPTS"
 
 # Register custom URL handlers
