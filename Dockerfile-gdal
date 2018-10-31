@@ -1,0 +1,13 @@
+FROM python:2.7-slim
+
+# ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
+# 安装gdal相关库
+RUN  apt-get update && apt-get install -y --no-install-recommends \
+         gdal-bin \
+         netcdf-bin \
+         libnetcdf-dev \
+         python-gdal  \
+         && rm -rf /var/lib/apt/lists/*
+
+
+CMD ["python2"]
