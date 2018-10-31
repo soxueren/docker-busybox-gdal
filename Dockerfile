@@ -243,7 +243,7 @@ RUN set -e \
 		exit 1; \
 	fi
 	
-#增加跨域
+#Tomcat优化
 ADD web.xml  $CATALINA_HOME/conf/web.xml
 
 EXPOSE 8080
