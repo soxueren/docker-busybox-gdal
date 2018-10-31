@@ -95,8 +95,7 @@ ENV PYTHON_PIP_VERSION 18.1
 RUN set -ex; \
 	\
 	savedAptMark="$(apt-mark showmanual)"; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends wget; \
+	apt-get update; \	
 	\
 	wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py'; \
 	\
@@ -256,9 +255,7 @@ RUN set -eux; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
 		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-	done; \
-	\
-	apt-get install -y --no-install-recommends wget ca-certificates; \
+	done; \		
 	\
 	success=; \
 	for url in $TOMCAT_TGZ_URLS; do \
