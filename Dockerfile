@@ -129,5 +129,4 @@ RUN  apt-get update && apt-get install -y --no-install-recommends \
 	 python-gdal  \	 
 	 && rm -rf /var/lib/apt/lists/*
 
-
 CMD ["python2"]
