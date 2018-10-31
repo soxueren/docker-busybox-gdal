@@ -1,6 +1,6 @@
 FROM soxueren/busybox-gdal:2.7-slim
 
-ARG BUILD_PACKAGES='cmake build-essential git  libgdal-dev'
+ARG BUILD_PACKAGES='cmake build-essential git'
 
 # Setup build and runtime packages
 RUN set -x && apt-get update && \
