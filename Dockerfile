@@ -120,7 +120,7 @@ RUN set -ex; \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
 
-# 安装gdal相关库
+# 安装gdal相关库gdal-bin libgdal-dev netcdf-bin libnetcdf-dev 
 RUN  apt-get update && apt-get install -y --no-install-recommends \      
          gdal-bin \	
 	 netcdf-bin \
