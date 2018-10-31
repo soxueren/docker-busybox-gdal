@@ -95,9 +95,10 @@ ENV PYTHON_PIP_VERSION 18.1
 RUN set -ex; \
 	\
 	savedAptMark="$(apt-mark showmanual)"; \
-	apt-get update; \	
+	apt-get update; \
+	apt-get install -y --no-install-recommends wget; \
 	\
-	wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py'; \
+	wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py'; \	
 	\
 	apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
