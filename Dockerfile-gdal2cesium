@@ -1,0 +1,13 @@
+FROM soxueren/busybox-gdal:2.7-slim
+
+# 安装gdal相关库
+RUN  apt-get update && apt-get install -y --no-install-recommends \      
+     libnetcdf-dev \
+     libnetcdf-dev \
+	   python-shapely \      
+	 && rm -rf /var/lib/apt/lists/*
+   
+ADD gdal2cesium/gdal2cesium.py /usr/bin/gdal2cesium.py
+RUN chmod +x /usr/bin/gdal2cesium.py
+CMD ["/usr/bin/gdal2cesium.py","--help"]
+
