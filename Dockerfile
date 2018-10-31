@@ -244,7 +244,12 @@ RUN set -e \
 	fi
 	
 #Tomcat优化
+ADD catalina.sh $CATALINA_HOME/bin/catalina.sh
 ADD web.xml  $CATALINA_HOME/conf/web.xml
+ADD tomcat-users.xml  $CATALINA_HOME/conf/tomcat-users.xml
+
+ADD manager/web.xml  $CATALINA_HOME/webapps/manager/WEB-INF/web.xml
+ADD manager/context.xml  $CATALINA_HOME/webapps/manager/META-INF/context.xml
 
 EXPOSE 8080
 
