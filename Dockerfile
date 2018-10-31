@@ -121,8 +121,7 @@ RUN set -ex; \
 	rm -f get-pip.py
 
 # 安装gdal相关库
-RUN  apt-get update && apt-get install -y --no-install-recommends \
-         git \
+RUN  apt-get update && apt-get install -y --no-install-recommends \      
          gdal-bin \
 	 libgdal-dev \
 	 netcdf-bin \
