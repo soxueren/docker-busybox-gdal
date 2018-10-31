@@ -122,10 +122,12 @@ RUN set -ex; \
 
 # 安装gdal相关库
 RUN  apt-get update && apt-get install -y --no-install-recommends \
+         git \
          gdal-bin \
+	 libgdal-dev \
 	 netcdf-bin \
          libnetcdf-dev \
-	 python-gdal  \
+	 python-gdal  \	 
 	 && rm -rf /var/lib/apt/lists/*
 
 
