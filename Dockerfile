@@ -9,12 +9,6 @@ RUN set -x \
     && mv /etc/apt/sources.list /etc/apt/sources.list.backup \
     && echo "deb ${APT_SRC} jessie main non-free contrib\r\ndeb ${APT_SRC} jessie-proposed-updates main non-free contrib\r\ndeb-src ${APT_SRC} jessie main non-free contrib\r\ndeb-src ${APT_SRC} jessie-proposed-updates main non-free contrib" > /etc/apt/sources.list \
     && apt-get update
-
-# 设置UTF8编码 //zh_CN,en_US
-RUN set -x \
-    apt-get update && apt-get install -y --no-install-recommends locales \
-    && localedef -i zh_CN -c -f UTF-8 -A /usr/share/locale/locale.alias zh_CN.UTF-8 \
-    && apt-get purge -y locales
     
 # 安装常用工具    
 RUN apt-get update && apt-get install -y --no-install-recommends \
