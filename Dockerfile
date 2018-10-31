@@ -3,11 +3,6 @@ FROM python:2-slim-stretch
 #增加apt代理
 #ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
     
-# 安装常用工具    
-RUN apt-get update && apt-get install -y --no-install-recommends \		
-		unzip \
-	     && rm -rf /var/lib/apt/lists/*
-    
 ENV LANG zh_CN.utf8
 ENV LC_ALL zh_CN.utf8
 
