@@ -1,20 +1,11 @@
-FROM python:2.7-slim
+FROM python:2-slim-stretch
 
 #增加apt代理
 #ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
-
-# 更换软件源
-ENV APT_SRC "http://mirrors.aliyun.com/debian/"
-RUN set -x \
-    && mv /etc/apt/sources.list /etc/apt/sources.list.backup \
-    && echo "deb ${APT_SRC} jessie main non-free contrib\r\ndeb ${APT_SRC} jessie-proposed-updates main non-free contrib\r\ndeb-src ${APT_SRC} jessie main non-free contrib\r\ndeb-src ${APT_SRC} jessie-proposed-updates main non-free contrib" > /etc/apt/sources.list \
-    && apt-get update
     
 # 安装常用工具    
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		bzip2 \
+RUN apt-get update && apt-get install -y --no-install-recommends \		
 		unzip \
-		xz-utils  \
 	     && rm -rf /var/lib/apt/lists/*
     
 ENV LANG zh_CN.utf8
@@ -22,8 +13,10 @@ ENV LC_ALL zh_CN.utf8
 
 # 安装gdal相关库
 RUN  apt-get install -y --no-install-recommends \
-         gdal-bin netcdf-bin \
-         libnetcdf-dev python-gdal  \
+         gdal-bin \
+	 netcdf-bin \
+         libnetcdf-dev \
+	 python-gdal  \
 	 && rm -rf /var/lib/apt/lists/*
 
 # 安装openjdk
