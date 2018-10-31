@@ -125,6 +125,11 @@ RUN  apt-get update && apt-get install -y --no-install-recommends \
          gdal-bin \	
 	 netcdf-bin \
 	 python-gdal  \	 
+	 python-shapely  \
 	 && rm -rf /var/lib/apt/lists/*
- 
-CMD ["python2"]
+   
+ADD gdal2cesium/gdal2cesium.py /usr/bin/gdal2cesium.py
+RUN chmod +x /usr/bin/gdal2cesium.py
+
+CMD ["/usr/bin/gdal2cesium.py","--help"]
+
