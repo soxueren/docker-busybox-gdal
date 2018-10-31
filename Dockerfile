@@ -1,6 +1,8 @@
 FROM python:2.7-slim
 
+#增加apt代理
 #ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
+
 # 更换软件源
 ENV APT_SRC "http://mirrors.aliyun.com/debian/"
 RUN set -x \
@@ -10,15 +12,16 @@ RUN set -x \
 
 # 设置UTF8编码 //zh_CN,en_US
 RUN set -x \
-    && apt-get install -y --no-install-recommends locales \
+    apt-get update && apt-get install -y --no-install-recommends locales \
     && localedef -i zh_CN -c -f UTF-8 -A /usr/share/locale/locale.alias zh_CN.UTF-8 \
     && apt-get purge -y locales
     
+# 安装常用工具    
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		bzip2 \
 		unzip \
 		xz-utils  \
-	   && rm -rf /var/lib/apt/lists/*
+	     && rm -rf /var/lib/apt/lists/*
     
 ENV LANG zh_CN.utf8
 ENV LC_ALL zh_CN.utf8
@@ -27,8 +30,7 @@ ENV LC_ALL zh_CN.utf8
 RUN  apt-get install -y --no-install-recommends \
          gdal-bin netcdf-bin \
          libnetcdf-dev python-gdal  \
-	    && rm -rf /var/lib/apt/lists/*
-
+	 && rm -rf /var/lib/apt/lists/*
 
 # 安装openjdk
 # add a simple script that can auto-detect the appropriate JAVA_HOME value
@@ -240,7 +242,11 @@ RUN set -e \
 		echo >&2 "$nativeLines"; \
 		exit 1; \
 	fi
+	
+#增加跨域
+ADD web.xml  $CATALINA_HOME/conf/web.xml
 
 EXPOSE 8080
 
 #CMD ["python2"]
+CMD ["catalina.sh", "run"]
