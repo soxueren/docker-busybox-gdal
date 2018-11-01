@@ -54,16 +54,26 @@ Options:
   ```
 ### 5.使用[web服务器](https://github.com/soxueren/docker-busybox-gdal/blob/gdal2cesium/server.js)发布地形瓦片（设置跨域）
 ```
- var app = express();
-	//设置跨域访问
-	app.all('*', function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
-	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-	res.header("X-Powered-By",' 3.2.1');
-	res.header("Content-Type", "application/json;charset=utf-8");
-	next();
-	});
+## 设置mime类型
+var mime = express.static.mime;
+    mime.define({
+        'application/json' : ['czml', 'json', 'geojson', 'topojson'],
+        'model/vnd.gltf+json' : ['gltf'],
+        'model/vnd.gltf.binary' : ['glb', 'bgltf'],
+        'application/octet-stream' : ['b3dm', 'pnts', 'i3dm', 'cmpt'],
+        'text/plain' : ['glsl']        
+    });
+
+    var app = express();
     app.use(compression());
-    app.use(express.static(__dirname));
+## 跨域
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+		res.header("X-Powered-By",' 3.2.1');
+		res.header("Content-Type", "application/json;charset=utf-8");
+        next();
+    });    
+
 ```
