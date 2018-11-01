@@ -15,8 +15,8 @@ RUN apt-get install -y --no-install-recommends \
 	 python3-gdal \
 	 python-shapely \
      && rm -rf /var/lib/apt/lists/*
-	 
-ADD gdal2cesium.py /usr/bin/gdal2cesium.py
+
+ADD gdal2cesium/gdal2cesium.py /usr/bin/gdal2cesium.py
 RUN chmod +x /usr/bin/gdal2cesium.py
 
 #RUN gdal2cesium.py
