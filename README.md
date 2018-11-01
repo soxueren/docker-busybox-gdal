@@ -1,4 +1,5 @@
-### 1.下载DEM数据，下载地址：[www.gscloud.cn](http://www.gscloud.cn/)，使用高级检索，根据实际需求，下载不同精度的DEM数据
+### 1.下载DEM数据
+下载地址：[www.gscloud.cn](http://www.gscloud.cn/)，使用高级检索，根据实际需求，下载不同精度的DEM数据
 ### 2.[gdal_merge](https://www.gdal.org/1.11/gdal_merge.html)或[gdalwarp](https://www.gdal.org/1.11/gdalwarp.html)合并栅格
 ```
 # gdal_merge合并
@@ -51,7 +52,7 @@ Options:
   gdal2cesium.py -r bilinear  -o ./srtm G:/GIS/data/terrain/rasters/*.tif
   
   ```
-### 5.使用[web服务器](https://github.com/soxueren/docker-busybox-gdal/blob/gdal2cesium/server.js)发布地形瓦片（设置好跨域）
+### 5.使用[web服务器](https://github.com/soxueren/docker-busybox-gdal/blob/gdal2cesium/server.js)发布地形瓦片（设置跨域）
 ```
  var app = express();
 	//设置跨域访问
