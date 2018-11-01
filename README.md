@@ -1,9 +1,9 @@
 ### 1.下载DEM数据，下载地址：[www.gscloud.cn](http://www.gscloud.cn/)，使用高级检索，根据实际需求，下载不同精度的DEM数据
 ### 2.gdal_merge或gdalwarp合并栅格
 ```
-#gdal_merge合并
-
-#gdalwarp合并有自动填充nodata选项和自动插值功能，可以省略第三步骤
+# gdal_merge合并
+gdal_merge.bat -ot Float32 -of GTiff -o ./OUTPUT.tif in1.tif in2.tif in3*.tif
+# gdalwarp合并有自动填充nodata选项和自动插值功能，可以省略第三步骤
 gdalwarp -s_srs EPSG:4326 -t_srs EPSG:4326 -dstnodata 0.0 -r bilinear -ot Float32 -of GTiff G:/GIS/data/terrain/tif/*.tif  G:/GIS/data/terrain/result/dem.tif
 ```
 ```
@@ -113,6 +113,9 @@ dstfile:
 The destination file name.    
 ```
 ### 3.gdal_fillnodata填充nodata
+```
+gdal_fillnodata -md 10 -b 1  -of GTiff ./ASTGTM2_N43E084_dem.tif ./OUTPUT.tif
+```
 ### 4.[gdal2cesium.py](https://github.com/giohappy/gdal2cesium) -o G:/GIS/data/terrain/srtm G:/GIS/data/terrain/result/dem.tif
 ```
 Usage: gdal2cesium.py [options] input_file(s)
