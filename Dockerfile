@@ -124,7 +124,8 @@ RUN set -ex; \
 RUN  apt-get update && apt-get install -y --no-install-recommends \      
          gdal-bin \	
 	 netcdf-bin \
-	 python-gdal  \	 
+	 libgdal-dev \
+	 libnetcdf-dev \
 	 && rm -rf /var/lib/apt/lists/*
  
 CMD ["python2"]
