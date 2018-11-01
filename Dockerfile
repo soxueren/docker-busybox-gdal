@@ -1,13 +1,11 @@
-FROM debian:stretch-slim
+FROM debian
 
-#增加apt代理
-#ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
- 	 
-ARG BUILD_PACKAGES='cmake build-essential git gcc'
+ARG BUILD_PACKAGES='cmake build-essential git ca-certificates libgdal-dev'
+ARG RUNTIME_PACKAGES='gdal-bin'
 
 # Setup build and runtime packages
 RUN set -x && apt-get update && \
-  apt-get install -y --no-install-recommends $BUILD_PACKAGES
+  apt-get install -y --no-install-recommends $BUILD_PACKAGES $RUNTIME_PACKAGES
 # Grab source code
 RUN set -x && \
   mkdir -p ctbtemp && cd ctbtemp && \
@@ -34,4 +32,4 @@ RUN  echo 'alias ..="cd .."' >> ~/.bashrc && \
 
 WORKDIR /data
 
-CMD ["bash"] 
+CMD ["bash"]
