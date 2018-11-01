@@ -11,4 +11,4 @@ RUN  apt-get update && apt-get install -y --no-install-recommends \
 	 libnetcdf-dev \
 	 && rm -rf /var/lib/apt/lists/*
  
-CMD ["python2"]
+CMD ["gdalinfo","--help"]
