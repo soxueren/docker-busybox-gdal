@@ -25,7 +25,7 @@ gdalwarp [--help-general] [--formats]
 ```
 gdal_fillnodata -md 10 -b 1  -of GTiff ./ASTGTM2_N43E084_dem.tif ./OUTPUT.tif
 ```
-### 4.[gdal2cesium.py](https://github.com/giohappy/gdal2cesium) -o G:/GIS/data/terrain/srtm G:/GIS/data/terrain/result/dem.tif
+### 4.[gdal2cesium.py](https://github.com/giohappy/gdal2cesium) 切片
 ```
 Usage: gdal2cesium.py [options] input_file(s)
 
