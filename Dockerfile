@@ -1,9 +1,9 @@
-FROM soxueren/busybox-gdal:2.7-slim
+FROM debian:stretch-slim
 
 #增加apt代理
 #ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
  	 
-ARG BUILD_PACKAGES='cmake build-essential git'
+ARG BUILD_PACKAGES='cmake build-essential git gcc'
 
 # Setup build and runtime packages
 RUN set -x && apt-get update && \
