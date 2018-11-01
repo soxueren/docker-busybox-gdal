@@ -8,7 +8,7 @@ gdalwarp -s_srs EPSG:4326 -t_srs EPSG:4326 -dstnodata 0.0 -r bilinear -ot Float3
 ff G:/GIS/data/terrain/tif/*.tif  G:/GIS/data/terrain/result/dem.tif
 ```
 ### 3.gdal_fillnodata填充nodata
-### 4.gdal2cesium.py -o G:/GIS/data/terrain/srtm G:/GIS/data/terrain/result/dem.tif
+### 4.[gdal2cesium.py](https://github.com/giohappy/gdal2cesium) -o G:/GIS/data/terrain/srtm G:/GIS/data/terrain/result/dem.tif
 ```
 Usage: gdal2cesium.py [options] input_file(s)
 
