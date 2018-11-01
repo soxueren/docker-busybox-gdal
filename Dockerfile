@@ -5,6 +5,8 @@ FROM soxueren/busybox-gdal:2.7-slim
 
 # 安装gdal相关库gdal-bin libgdal-dev netcdf-bin libnetcdf-dev 
 RUN  apt-get update && apt-get install -y --no-install-recommends \
+         gdal-bin  \
+	 libgdal-dev \
 	 python-shapely  \
 	 && rm -rf /var/lib/apt/lists/*
    
