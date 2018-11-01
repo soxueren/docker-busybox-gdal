@@ -51,7 +51,7 @@ Options:
   gdal2cesium.py -r bilinear  -o ./srtm G:/GIS/data/terrain/rasters/*.tif
   
   ```
-### 5.使用web服务器发布地形瓦片（设置好跨域）
+### 5.使用[web服务器](https://github.com/soxueren/docker-busybox-gdal/blob/gdal2cesium/server.js)发布地形瓦片（设置好跨域）
 ```
  var app = express();
 	//设置跨域访问
