@@ -1,4 +1,4 @@
-#[ Cesium Terrain Builder](https://github.com/ahuarte47/cesium-terrain-builder)
+[ Cesium Terrain Builder](https://github.com/ahuarte47/cesium-terrain-builder)
 
 This is a C++ library and associated command line tools designed to create
 terrain tiles for use with the [Cesium JavaScript](http://cesiumjs.org) library.
