@@ -292,6 +292,41 @@ cmake -DGDAL_LIBRARY_DIR=/home/user/install/lib \
 
 If you dataset consists of a single file, continue to the next step. If your dataset consists of multiple tiles (more than one file), a *GDAL Virtual Dataset* needs to be created using the `gdalbuildvrt` app.
 
+```
+Usage: gdalbuildvrt [-tileindex field_name]
+                    [-resolution {highest|lowest|average|user}]
+                    [-te xmin ymin xmax ymax] [-tr xres yres] [-tap]
+                    [-separate] [-b band] [-sd subdataset]
+                    [-allow_projection_difference] [-q]
+                    [-addalpha] [-hidenodata]
+                    [-srcnodata "value [value...]"] [-vrtnodata "value [value...]"] 
+                    [-a_srs srs_def]
+                    [-input_file_list my_liste.txt] [-overwrite] output.vrt [gdalfile]*
+
+eg.
+  % gdalbuildvrt doq_index.vrt doq/*.tif
+  % gdalbuildvrt -input_file_list my_liste.txt doq_index.vrt
+
+NOTES:
+  o With -separate, each files goes into a separate band in the VRT band.
+    Otherwise, the files are considered as tiles of a larger mosaic.
+  o -b option selects a band to add into vrt.  Multiple bands can be listed.
+    By default all bands are queried.
+  o The default tile index field is 'location' unless otherwise specified by
+    -tileindex.
+  o In case the resolution of all input files is not the same, the -resolution
+    flag enable the user to control the way the output resolution is computed.
+    Average is the default.
+  o Input files may be any valid GDAL dataset or a GDAL raster tile index.
+  o For a GDAL raster tile index, all entries will be added to the VRT.
+  o If one GDAL dataset is made of several subdatasets and has 0 raster bands,
+    its datasets will be added to the VRT rather than the dataset itself.
+    Single subdataset could be selected by its number using the -sd option.
+  o By default, only datasets of same projection and band characteristics
+    may be added to the VRT.
+
+FAILURE: No output filename specified.
+```
 ```sh
 gdalbuildvrt <output-vrt-file.vrt> <files>
 ```
