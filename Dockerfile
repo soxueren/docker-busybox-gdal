@@ -9,7 +9,7 @@ RUN set -x && apt-get update && \
 # Grab source code
 RUN set -x && \
   mkdir -p ctbtemp && cd ctbtemp && \
-  git clone https://github.com/geo-data/cesium-terrain-builder.git && \
+  git clone https://github.com/ahuarte47/cesium-terrain-builder.git && \
   cd cesium-terrain-builder && \
   git checkout master-quantized-mesh
 # Build & install cesium terrain builder  
