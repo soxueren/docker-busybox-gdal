@@ -288,22 +288,6 @@ cmake -DGDAL_LIBRARY_DIR=/home/user/install/lib \
       -DGDAL_INCLUDE_DIR=/home/user/install/include \
       ..
 ```
-
-### Using Docker
-
-[homme/cesium-terrain-builder](https://registry.hub.docker.com/u/homme/cesium-terrain-builder/)
-is a [Docker](http://www.docker.com/) image that bundles the CTB tools and
-simplifies their deployment.  Follow the link for usage information.
-
-The only requirement to getting up and running with Cesium Terrain Builder is
-having docker available on your system: all software dependencies, build and
-installation issues are encapsulated in the image.
-
-In addition, the
-[geodata/cesium-terrain-server](https://registry.hub.docker.com/u/geodata/cesium-terrain-server/)
-Docker image provides a way of visualising the tilesets created by
-`homme/cesium-terrain-builder`.
-
 ### Create a GDAL Virtual Dataset (optional)
 
 If you dataset consists of a single file, continue to the next step. If your dataset consists of multiple tiles (more than one file), a *GDAL Virtual Dataset* needs to be created using the `gdalbuildvrt` app.
@@ -367,6 +351,34 @@ terrain/
 |-- 14
 |-- 15
 `-- layer.json
+```
+
+### Start CTB container and mount data folder
+
+First, start a CTB container and mount your terrain data folder to `/data` in the container. Follow the examples below for different operating systems and shells.
+
+#### Linux
+
+```bash
+docker run -it --name ctb \
+    -v "/docker/terrain":"/data" \  
+  tumgis/ctb-quantized-mesh
+```
+
+#### Windows - `cmd`
+
+```sh
+docker run -it --name ctb ^
+    -v "d:/docker/terrain":"/data" ^
+  tumgis/ctb-quantized-mesh
+```
+
+#### Windows - `git-bash`
+
+```sh
+winpty docker run --rm -it --name ctb \
+    -v "d:\\docker\\terrain":"/data" \
+  tumgis/ctb-quantized-mesh
 ```
 ## Limitations and TODO
 
