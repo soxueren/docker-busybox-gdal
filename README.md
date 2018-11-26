@@ -304,6 +304,70 @@ In addition, the
 Docker image provides a way of visualising the tilesets created by
 `homme/cesium-terrain-builder`.
 
+### Create a GDAL Virtual Dataset (optional)
+
+If you dataset consists of a single file, continue to the next step. If your dataset consists of multiple tiles (more than one file), a *GDAL Virtual Dataset* needs to be created using the `gdalbuildvrt` app.
+
+```sh
+gdalbuildvrt <output-vrt-file.vrt> <files>
+```
+
+For instance, if you have several `*.tif` files, run:
+
+```sh
+gdalbuildvrt tiles.vrt *.tif
+```
+
+More options to create a *GDAL Virtual Dataset* e.g. using a *list of files* are described in the [gdalbuildvrt documentation](https://www.gdal.org/gdalbuildvrt.html).
+
+### Create Cesium Terrain files
+
+First, create an output folder for you terrain, e.g. `mkdir -p terrain`. Second, run CTB to create the terrain files:
+
+```sh
+ctb-tile -f Mesh -C -N -o terrain <inputfile.tif or input.vrt>
+```
+
+For example, if a `tile.vrt` has been created as described above:
+
+```sh
+ctb-tile -f Mesh -C -N -o terrain tile.vrt
+```
+
+The `ctb-tile` app supports several options. Run `ctb-tile --help` to display all options. For larger datasets consider setting the `-m` option and the `GDAL_CHACHEMAX` environment variable as described [here](https://github.com/geo-data/cesium-terrain-builder#ctb-tile).
+
+### Create Cesium layer description file
+
+Finally, a *layer description* file needs to be created. Simply run the same command you used for creating the terrain files again adding the `-l` switch. For instance:
+
+```sh
+ctb-tile -f Mesh -C -N -o terrain tiles.vrt            # Create terrain files
+ctb-tile -f Mesh -C -N -l -o terrain tiles.vrt         # Create layer description file
+```
+
+Finally, your terrain data folder should look similar to this:
+
+```text
+$ tree -v -C -L 1 terrain/
+terrain/
+|-- 0
+|-- 1
+|-- 2
+|-- 3
+|-- 4
+|-- 5
+|-- 6
+|-- 7
+|-- 8
+|-- 9
+|-- 10
+|-- 11
+|-- 12
+|-- 13
+|-- 14
+|-- 15
+`-- layer.json
+```
 ## Limitations and TODO
 
 * Create a comprehensive test harness (possibly using
