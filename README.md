@@ -334,7 +334,7 @@ gdalbuildvrt <output-vrt-file.vrt> <files>
 For instance, if you have several `*.tif` files, run:
 
 ```sh
-gdalbuildvrt tiles.vrt *.tif
+gdalbuildvrt -resolution highest tiles.vrt  *.tif
 ```
 
 More options to create a *GDAL Virtual Dataset* e.g. using a *list of files* are described in the [gdalbuildvrt documentation](https://www.gdal.org/gdalbuildvrt.html).
