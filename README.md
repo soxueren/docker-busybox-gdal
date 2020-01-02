@@ -3,7 +3,7 @@
 ### 2.[gdalwarp](https://www.gdal.org/1.11/gdalwarp.html)合并栅格
 ```
 # gdalwarp合并有自动填充nodata选项和自动插值功能
-gdalwarp -s_srs EPSG:4326 -t_srs EPSG:4326 -dstnodata 0.0 -r bilinear -ot Float32 -of GTiff G:/GIS/data/terrain/tif/*.tif  G:/GIS/data/terrain/result/dem.tif
+gdalwarp -s_srs EPSG:4326 -t_srs EPSG:4326 -dstnodata -999999999 -r bilinear -ot Float32 -of GTiff G:/GIS/data/terrain/tif/*.tif  G:/GIS/data/terrain/result/dem.tif
 ```
 ```
 gdalwarp [--help-general] [--formats]
