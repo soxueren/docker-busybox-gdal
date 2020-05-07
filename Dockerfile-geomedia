@@ -25,6 +25,7 @@ RUN \
 ARG POPPLER_DEV=poppler-dev
 RUN apk add --no-cache \
     linux-headers \
+    libstdc++ \
     curl-dev tiff-dev \
     zlib-dev zstd-dev \
     libjpeg-turbo-dev libpng-dev openjpeg-dev libwebp-dev expat-dev \
