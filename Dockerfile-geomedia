@@ -166,7 +166,6 @@ RUN apk add --no-cache \
         libjpeg-turbo libpng libwebp expat \
         python3 py3-numpy ${POPPLER} pcre libpq libxml2 portablexdr openjpeg \
         openexr \
-		openjdk-8 \
     # Remove /usr/lib/libopenjp2.so.2.3.0 since we are building v2.3.1 manually
     # && rm -f /usr/lib/libopenjp2.so.2.3.0 \
     # libturbojpeg.so is not used by GDAL. Only libjpeg.so*
