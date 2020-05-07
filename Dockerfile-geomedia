@@ -36,12 +36,6 @@ ENV PATH=$PATH:$JAVA_HOME/jre/bin:$JAVA_HOME/bin
 ENV JAVA_VERSION=8u212
 ENV JAVA_ALPINE_VERSION=8.212.04-r0
 
-# Jackcess for mdb
-ARG JACKCESS_VERSION=3.0.1
-RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-${JACKCESS_VERSION}.jar	https://excellmedia.dl.sourceforge.net/project/jackcess/jackcess/${JACKCESS_VERSION}/jackcess-${JACKCESS_VERSION}.jar
-RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-lang3-3.8.1.jar  https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar
-RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-logging-1.2.jar https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar
-
 # Build GDAL
 ARG GDAL_VERSION=master
 ARG GDAL_RELEASE_DATE
@@ -152,8 +146,7 @@ ENV JAVA_VERSION=8u212
 ENV JAVA_ALPINE_VERSION=8.212.04-r0
 
 # Jackcess for mdb
-ARG JACKCESS_VERSION=3.0.1
-RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-${JACKCESS_VERSION}.jar	https://excellmedia.dl.sourceforge.net/project/jackcess/jackcess/${JACKCESS_VERSION}/jackcess-${JACKCESS_VERSION}.jar
+RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-3.0.1.jar	https://excellmedia.dl.sourceforge.net/project/jackcess/jackcess/3.0.1/jackcess-3.0.1.jar
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-lang3-3.8.1.jar  https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-logging-1.2.jar https://repo1.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar
 
