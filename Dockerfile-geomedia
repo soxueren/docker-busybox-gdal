@@ -271,10 +271,10 @@ RUN if test "${SPATIALITE_VERSION}" != ""; then ( \
 COPY --from=openjdk:8-alpine  /usr/lib/jvm/java-1.8-openjdk/ /usr/lib/jvm/java-1.8-openjdk/
 ENV LANG=C.UTF-8
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
-ENV PATH=$PATH:$JAVA_HOME/jre/bin:$JAVA_HOME/bin
+ENV PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 ENV JAVA_VERSION=8u212
 ENV JAVA_ALPINE_VERSION=8.212.04-r0
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 
 # Build GDAL
 ARG GDAL_VERSION=master
@@ -330,8 +330,8 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
         ccache -M 1G; \
     fi \
     && ./configure --prefix=/usr --without-libtool \
-    --with-java=${JAVA_HOME} --with-jvm-lib=${JAVA_HOME}/jre/lib/amd64/server --with-mdb=yes \
-    --with-jvm-lib-add-rpath=${JAVA_HOME}/jre/lib/amd64/server \
+    --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
+    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
     --with-hide-internal-symbols \
     --with-proj=/usr \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
@@ -400,10 +400,10 @@ RUN apk add --no-cache \
 COPY --from=openjdk:8-alpine  /usr/lib/jvm/java-1.8-openjdk/ /usr/lib/jvm/java-1.8-openjdk/
 ENV LANG=C.UTF-8
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
-ENV PATH=$PATH:$JAVA_HOME/jre/bin:$JAVA_HOME/bin
+ENV PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 ENV JAVA_VERSION=8u212
 ENV JAVA_ALPINE_VERSION=8.212.04-r0
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAVA_HOME/jre/lib/amd64/server
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 
 # Jackcess for mdb
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-3.0.1.jar	https://repo1.maven.org/maven2/com/healthmarketscience/jackcess/jackcess/3.0.1/jackcess-3.0.1.jar
