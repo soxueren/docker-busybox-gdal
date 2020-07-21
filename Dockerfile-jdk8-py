@@ -331,7 +331,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     fi \
     && ./configure --prefix=/usr --without-libtool \
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
-    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
+    --with-jvm-lib-add-rpath=yes \
     --with-hide-internal-symbols \
     --with-proj=/usr \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
@@ -341,6 +341,17 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     --with-python \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
+    && echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
+    && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> swig/java/java.opt \
+    && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> swig/java/java.opt \
+    && echo -e 'JAVA=$(JAVA_HOME)/bin/java' >> swig/java/java.opt \
+    && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> swig/java/java.opt \
+    && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> swig/java/java.opt \
+    && cd swig/java  \
+    && make -j$(nproc) \
+    && make install DESTDIR="/build" \
+    && cd ../.. \
+    && ls /build \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
         echo "Uploading cache..."; \
