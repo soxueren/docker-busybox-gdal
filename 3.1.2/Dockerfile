@@ -339,7 +339,7 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
     && ls /build/usr/lib | grep gdal
-    
+# build swig java    
 RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
     && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> swig/java/java.opt \
     && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> swig/java/java.opt \
