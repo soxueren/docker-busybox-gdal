@@ -277,14 +277,10 @@ ENV JAVA_ALPINE_VERSION=8.212.04-r0
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 
 # Build GDAL
-ARG GDAL_VERSION=master
-ARG GDAL_RELEASE_DATE
-ARG GDAL_BUILD_IS_RELEASE
-RUN if test "${GDAL_VERSION}" = "master"; then \
-        export GDAL_VERSION=$(curl -Ls https://api.github.com/repos/OSGeo/gdal/commits/HEAD -H "Accept: application/vnd.github.VERSION.sha"); \
-        export GDAL_RELEASE_DATE=$(date "+%Y%m%d"); \
-    fi \
-    && if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
+# http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz
+ARG GDAL_VERSION=3.1.2
+ARG GDAL_BUILD_IS_RELEASE=yes
+RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
         export GDAL_SHA1SUM=${GDAL_VERSION}; \
     fi \
     && export GDAL_EXTRA_ARGS="" \
@@ -313,9 +309,9 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     fi \
     && echo ${GDAL_EXTRA_ARGS} \
     && mkdir gdal \
-    && wget -q https://github.com/OSGeo/gdal/archive/${GDAL_VERSION}.tar.gz -O - \
+    && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz -O - \
         | tar xz -C gdal --strip-components=1 \
-    && cd gdal/gdal \
+    && cd gdal \
     && if test "${RSYNC_REMOTE}" != ""; then \
         echo "Downloading cache..."; \
         rsync -ra ${RSYNC_REMOTE}/gdal/ $HOME/; \
@@ -331,7 +327,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     fi \
     && ./configure --prefix=/usr --without-libtool \
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
-    --with-jvm-lib-add-rpath=yes \
+    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
     --with-hide-internal-symbols \
     --with-proj=/usr \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
@@ -341,6 +337,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     --with-python \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
+    && ls /build/usr/lib | grep .so \
     && echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
     && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> swig/java/java.opt \
     && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> swig/java/java.opt \
@@ -351,7 +348,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     && make \
     && make install DESTDIR="/build" \
     && cd ../.. \
-    && ls /build/usr/lib \
+    && ls /build/usr/lib | grep .so \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
         echo "Uploading cache..."; \
@@ -361,7 +358,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
         unset CC; \
         unset CXX; \
     fi \
-    && cd ../.. \
+    && cd .. \
     && rm -rf gdal \
     && mkdir -p /build_gdal_python/usr/lib \
     && mkdir -p /build_gdal_python/usr/bin \
