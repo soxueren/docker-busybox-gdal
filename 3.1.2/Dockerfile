@@ -308,7 +308,8 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
         export GDAL_EXTRA_ARGS="--with-poppler ${GDAL_EXTRA_ARGS}"; \
     fi \
     && echo ${GDAL_EXTRA_ARGS} \
-    && mkdir gdal \
+    && mkdir -p gdal/gdal  \
+    && cd gdal \
     && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz -O - \
         | tar xz -C gdal --strip-components=1 \
     && cd gdal \
@@ -337,8 +338,9 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     --with-python \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
-    && ls /build/usr/lib | grep .so \
-    && echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
+    && ls /build/usr/lib | grep gdal
+    
+RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
     && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> swig/java/java.opt \
     && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> swig/java/java.opt \
     && echo -e 'JAVA=$(JAVA_HOME)/bin/java' >> swig/java/java.opt \
@@ -348,7 +350,7 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && make \
     && make install DESTDIR="/build" \
     && cd ../.. \
-    && ls /build/usr/lib | grep .so \
+    && ls /build/usr/lib | grep gdal \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
         echo "Uploading cache..."; \
@@ -358,9 +360,10 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
         unset CC; \
         unset CXX; \
     fi \
-    && cd .. \
-    && rm -rf gdal \
-    && mkdir -p /build_gdal_python/usr/lib \
+    && cd ../.. \
+    && rm -rf gdal 
+    
+RUN  mkdir -p /build_gdal_python/usr/lib \
     && mkdir -p /build_gdal_python/usr/bin \
     && mkdir -p /build_gdal_version_changing/usr/include \
     && mv /build/usr/lib/python3.8          /build_gdal_python/usr/lib \
