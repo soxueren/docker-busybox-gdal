@@ -348,7 +348,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> swig/java/java.opt \
     && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> swig/java/java.opt \
     && cd swig/java  \
-    && make -j$(nproc) \
+    && make \
     && make install DESTDIR="/build" \
     && cd ../.. \
     && ls /build/usr/lib \
