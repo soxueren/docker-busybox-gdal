@@ -35,6 +35,7 @@ RUN apk add --no-cache \
     # For spatialite (and GDAL)
     libxml2-dev \
     swig \
+    ant \
     && mkdir -p /build_thirdparty/usr/lib
 
 # Build xerces-c
