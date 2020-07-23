@@ -340,16 +340,16 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && make install DESTDIR="/build" \
     && ls /build/usr/lib | grep gdal
 # build swig java    
-RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
-    && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> swig/java/java.opt \
-    && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> swig/java/java.opt \
-    && echo -e 'JAVA=$(JAVA_HOME)/bin/java' >> swig/java/java.opt \
-    && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> swig/java/java.opt \
-    && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> swig/java/java.opt \
-    && cd swig/java  \
+RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
+    && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> /gdal/gdal/swig/java/java.opt \
+    && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> /gdal/gdal/swig/java/java.opt \
+    && echo -e 'JAVA=$(JAVA_HOME)/bin/java' >> /gdal/gdal/swig/java/java.opt \
+    && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> /gdal/gdal/swig/java/java.opt \
+    && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> /gdal/gdal/swig/java/java.opt \
+    && cd /gdal/gdal/swig/java  \
     && make \
     && make install DESTDIR="/build" \
-    && cd ../.. \
+    && cd /gdal/gdal  \
     && ls /build/usr/lib | grep gdal \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
@@ -360,7 +360,7 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > swig/java/java.opt \
         unset CC; \
         unset CXX; \
     fi \
-    && cd ../.. \
+    && cd /  \
     && rm -rf gdal 
     
 RUN  mkdir -p /build_gdal_python/usr/lib \
