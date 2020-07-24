@@ -34,8 +34,7 @@ RUN apk add --no-cache \
     openexr-dev \
     # For spatialite (and GDAL)
     libxml2-dev \
-    swig \
-    ant \
+    swig \ 
     && mkdir -p /build_thirdparty/usr/lib
 
 # Build xerces-c
@@ -278,6 +277,15 @@ ENV JAVA_VERSION=8u212
 ENV JAVA_ALPINE_VERSION=8.212.04-r0
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 
+# apache ant
+ENV ANT_VERSION=1.10.8
+ENV ANT_HOME=/usr/local/ant
+ENV PATH=$PATH:/usr/local/ant/bin
+RUN mkdir -p  /usr/local/ant  \
+        && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz -O - \
+        | tar xz -C /usr/local/ant --strip-components=1 \
+	&& chmod +x /usr/local/ant/bin/ant.*
+	
 # Build GDAL
 # http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz
 ARG GDAL_VERSION=3.1.2
