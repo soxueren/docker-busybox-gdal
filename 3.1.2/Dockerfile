@@ -282,7 +282,7 @@ ARG ANT_VERSION=1.10.8
 RUN mkdir -p  /usr/local/ant  \
         && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz -O - \
         | tar xz -C /usr/local/ant --strip-components=1 \
-	&& chmod +x /usr/local/ant/bin/ant.*
+	&& chmod +x /usr/local/ant/bin/ant
 ENV ANT_HOME=/usr/local/ant
 ENV PATH=$PATH:/usr/local/ant/bin
 	
