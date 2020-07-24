@@ -279,12 +279,13 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64
 
 # apache ant
 ENV ANT_VERSION=1.10.8
-ENV ANT_HOME=/usr/local/ant
-ENV PATH=$PATH:/usr/local/ant/bin
 RUN mkdir -p  /usr/local/ant  \
         && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz -O - \
         | tar xz -C /usr/local/ant --strip-components=1 \
 	&& chmod +x /usr/local/ant/bin/ant.*
+
+ENV ANT_HOME=/usr/local/ant
+ENV PATH=$PATH:/usr/local/ant/bin
 	
 # Build GDAL
 # http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz
@@ -349,6 +350,7 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
     && ls /build/usr/lib | grep gdal
+
 # build swig java    
 RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
     && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> /gdal/gdal/swig/java/java.opt \
