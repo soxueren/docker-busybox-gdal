@@ -338,7 +338,7 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     fi \
     && ./configure --prefix=/usr --without-libtool \
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
-    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
+    --with-jvm-lib-add-rpath=yes \
     --with-hide-internal-symbols \
     --with-proj=/usr \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
@@ -348,7 +348,7 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     --with-python \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
-    && ls /build/usr/lib | grep gdal
+    && ls /build/usr/lib
 
 # build swig java    
 RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
@@ -362,7 +362,7 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && make install DESTDIR="/build" \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /gdal/gdal  \
-    && ls /build/usr/lib | grep gdal \
+    && ls /gdal/gdal/swig/java  \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
         echo "Uploading cache..."; \
