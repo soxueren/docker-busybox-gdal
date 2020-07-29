@@ -199,7 +199,7 @@ RUN apk add --no-cache rsync ccache
 ARG RSYNC_REMOTE
 
 # Build PROJ
-ARG PROJ_VERSION=master
+ARG PROJ_VERSION=4.9.2
 RUN mkdir proj \
     && wget -q https://github.com/OSGeo/PROJ/archive/${PROJ_VERSION}.tar.gz -O - \
         | tar xz -C proj --strip-components=1 \
@@ -233,7 +233,7 @@ RUN mkdir proj \
     && for i in /build_proj/usr/bin/*; do strip -s $i 2>/dev/null || /bin/true; done
 
 # Build spatialite
-ARG SPATIALITE_VERSION=4.3.0a
+ARG SPATIALITE_VERSION=4.2.0
 RUN if test "${SPATIALITE_VERSION}" != ""; then ( \
     wget -q http://www.gaia-gis.it/gaia-sins/libspatialite-${SPATIALITE_VERSION}.tar.gz \
     && tar xzf libspatialite-${SPATIALITE_VERSION}.tar.gz \
