@@ -360,6 +360,7 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && cd /gdal/gdal/swig/java  \
     && make \
     && make install DESTDIR="/build" \
+    && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /gdal/gdal  \
     && ls /build/usr/lib | grep gdal \
     && if test "${RSYNC_REMOTE}" != ""; then \
