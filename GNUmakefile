@@ -56,13 +56,13 @@ generate: makedir ${WRAPPERS}
 build: generate ${JAVA_OBJECTS} ${JAVA_MODULES}
 ifeq ($(HAVE_LIBTOOL),yes)
 
-	if [ -f ".libs/libgdalalljni.so" ] ; then \
+	if [ -f ".libs/gdaljni.so" ] ; then \
 		cp .libs/*.so . ; \
 	fi
 
 	echo "$(wildcard .libs/*.dylib)"
 
-	if [ -f ".libs/libgdalalljni.dylib" ] ; then \
+	if [ -f ".libs/gdaljni.dylib" ] ; then \
 		cp .libs/*.dylib . ; \
 	fi
 
@@ -70,11 +70,11 @@ endif # HAVE_LIBTOOL=yes
 	ant
 
 install: build
-	if [ -f "libgdalalljni.so" ] ; then \
+	if [ -f "gdaljni.so" ] ; then \
 		for f in *.so; do $(INSTALL_LIB) $$f $(DESTDIR)$(INST_LIB) ; done ; \
 	fi
 
-	if [ -f "libgdalalljni.dylib" ] ; then \
+	if [ -f "gdaljni.dylib" ] ; then \
 		for f in *.dylib; do $(INSTALL_LIB) $$f $(DESTDIR)$(INST_LIB) ; done ; \
 	fi
 
