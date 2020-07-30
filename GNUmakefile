@@ -34,7 +34,7 @@ makedir:
 	mkdir -p org/gdal/osr
 	mkdir -p org/gdal/gnm
 
-JAVA_MODULES = gdaljni.$(SO_EXT) ogrjni.$(SO_EXT) gdalconstjni.$(SO_EXT) osrjni.$(SO_EXT)
+JAVA_MODULES = libgdalalljni.$(SO_EXT) gdaljni.$(SO_EXT) ogrjni.$(SO_EXT) gdalconstjni.$(SO_EXT) osrjni.$(SO_EXT)
 JAVA_OBJECTS = gdalconst_wrap.$(OBJ_EXT) gdal_wrap.$(OBJ_EXT) osr_wrap.$(OBJ_EXT) ogr_wrap.$(OBJ_EXT) gnm_wrap.$(OBJ_EXT)
 
 clean:
@@ -56,13 +56,13 @@ generate: makedir ${WRAPPERS}
 build: generate ${JAVA_OBJECTS} ${JAVA_MODULES}
 ifeq ($(HAVE_LIBTOOL),yes)
 
-	if [ -f ".libs/gdaljni.so" ] ; then \
+	if [ -f ".libs/libgdalalljni.so" ] ; then \
 		cp .libs/*.so . ; \
 	fi
 
 	echo "$(wildcard .libs/*.dylib)"
 
-	if [ -f ".libs/gdaljni.dylib" ] ; then \
+	if [ -f ".libs/libgdalalljni.dylib" ] ; then \
 		cp .libs/*.dylib . ; \
 	fi
 
@@ -70,11 +70,11 @@ endif # HAVE_LIBTOOL=yes
 	ant
 
 install: build
-	if [ -f "gdaljni.so" ] ; then \
+	if [ -f "libgdalalljni.so" ] ; then \
 		for f in *.so; do $(INSTALL_LIB) $$f $(DESTDIR)$(INST_LIB) ; done ; \
 	fi
 
-	if [ -f "gdaljni.dylib" ] ; then \
+	if [ -f "libgdalalljni.dylib" ] ; then \
 		for f in *.dylib; do $(INSTALL_LIB) $$f $(DESTDIR)$(INST_LIB) ; done ; \
 	fi
 
