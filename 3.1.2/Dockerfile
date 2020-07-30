@@ -359,9 +359,10 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> /gdal/gdal/swig/java/java.opt \
     && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> /gdal/gdal/swig/java/java.opt \
     && cd /gdal/gdal/swig/java  \
-    && make \    
+    && make \
     && make install DESTDIR="/build" \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
+    && make test \
     && cd /gdal/gdal  \
     && ls /gdal/gdal/swig/java  \
     && if test "${RSYNC_REMOTE}" != ""; then \
