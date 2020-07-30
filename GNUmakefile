@@ -34,7 +34,7 @@ makedir:
 	mkdir -p org/gdal/osr
 	mkdir -p org/gdal/gnm
 
-JAVA_MODULES = libgdalalljni.$(SO_EXT) gdaljni.$(SO_EXT) ogrjni.$(SO_EXT) gdalconstjni.$(SO_EXT) osrjni.$(SO_EXT)
+JAVA_MODULES = libgdalalljni.$(SO_EXT)
 JAVA_OBJECTS = gdalconst_wrap.$(OBJ_EXT) gdal_wrap.$(OBJ_EXT) osr_wrap.$(OBJ_EXT) ogr_wrap.$(OBJ_EXT) gnm_wrap.$(OBJ_EXT)
 
 clean:
@@ -104,7 +104,7 @@ ifdef INCLUDE_GDAL_LIB
     LIB_GDAL=$(GDAL_LIB)
 endif
 
-$(JAVA_MODULES): gdaljni.$(SO_EXT) ogrjni.$(SO_EXT) gdalconstjni.$(SO_EXT) osrjni.$(SO_EXT)
+$(JAVA_MODULES): $(JAVA_OBJECTS) 
 	$(LINK) $(LDFLAGS) $^ $(LIB_GDAL) $(CONFIG_LIBS) -o $@ $(LINK_EXTRAFLAGS)
 
 # Do not remove -fno-strict-aliasing while SWIG generates weird code in upcast methods
@@ -117,4 +117,3 @@ $(JAVA_MODULES): gdaljni.$(SO_EXT) ogrjni.$(SO_EXT) gdalconstjni.$(SO_EXT) osrjn
 
 %.$(OBJ_EXT): %.c
 	$(CC) -fno-strict-aliasing $(GDAL_INCLUDE) $(CFLAGS) $(CPPFLAGS) $(JAVA_INCLUDE) -c $<
-
