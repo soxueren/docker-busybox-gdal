@@ -361,7 +361,6 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && cd /gdal/gdal/swig/java  \
     && make \    
     && make install DESTDIR="/build" \
-    && make test \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /gdal/gdal  \
     && ls /gdal/gdal/swig/java  \
