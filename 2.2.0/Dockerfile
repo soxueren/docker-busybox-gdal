@@ -5,7 +5,7 @@ RUN apt-get update \
 	unzip \	
 	build-essential \
 	wget \
-	swig
+	swig 
 	
 # openjdk
 COPY --from=openjdk:8-jdk  /usr/local/openjdk-8/ /usr/lib/jvm/java-1.8-openjdk/
@@ -50,7 +50,9 @@ RUN cd /gdal/gdal/swig/java  \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /  \
-    && rm -rf gdal
+    && rm -rf gdal \
+    && apt-get remove -y --purge build-essential \
+    && apt-get clean
   
 # Jackcess for mdb
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-1.2.8.jar  \
