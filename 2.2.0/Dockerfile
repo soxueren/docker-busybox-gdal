@@ -24,7 +24,7 @@ RUN mkdir -p  /gdal/gdal \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
     --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \  
     --with-python \
-    && make -j$(nproc) \
+    && make \
     && make install  
 
 RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
