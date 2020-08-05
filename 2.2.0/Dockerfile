@@ -11,7 +11,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib/jvm/java-1.8-openjdk/jre/
 # Build GDAL
 ARG GDAL_VERSION=2.2.0
 RUN mkdir -p  /gdal/gdal \
-   &&   cd /gdal \
+    &&   cd /gdal \
     && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz  -O - \
         | tar xz -C gdal --strip-components=1 \
     && cd /gdal/gdal \
@@ -38,7 +38,7 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && make install  \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
-    && cd ../.. \
+    && cd /  \
     && rm -rf gdal
   
 # Jackcess for mdb
@@ -48,3 +48,6 @@ RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-lang-2.4.jar  \
     https://repo1.maven.org/maven2/commons-lang/commons-lang/2.4/commons-lang-2.4.jar
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/commons-logging-1.1.1.jar  \
     https://repo1.maven.org/maven2/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+    
+# Output version and capabilities by default.
+CMD gdalinfo --version && gdalinfo --formats && ogrinfo --formats
