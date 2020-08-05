@@ -351,7 +351,6 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && ls /build/usr/lib
 
 # build swig java  
-COPY ./GNUmakefile /gdal/gdal/swig/java/GNUmakefile
 RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
     && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> /gdal/gdal/swig/java/java.opt \
     && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> /gdal/gdal/swig/java/java.opt \
@@ -362,7 +361,6 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && make \
     && make install DESTDIR="/build" \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
-    && cd /gdal/gdal  \
     && ls /gdal/gdal/swig/java  \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
