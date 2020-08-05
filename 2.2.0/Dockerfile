@@ -1,10 +1,10 @@
 FROM geographica/gdal2:2.2.0
 
- RUN apt-get install -y \
-			unzip \
-			vim  \
-			build-essential \
-			wget 
+ RUN apt-get update -y \
+        && apt-get install -y \
+		unzip \	
+		build-essential \
+		wget 
 # openjdk
 COPY --from=openjdk:8-jdk  /usr/local/openjdk-8/ /usr/lib/jvm/java-1.8-openjdk/
 ENV LANG=C.UTF-8
@@ -45,7 +45,11 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /  \
     && rm -rf gdal
-  
+    
+RUN apt-get update -y \ 
+        && apt-get remove -y --purge build-essential wget 
+ 
+    
 # Jackcess for mdb
 RUN wget -O /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/jackcess-1.2.8.jar  \
 	https://repo1.maven.org/maven2/com/healthmarketscience/jackcess/jackcess/1.2.8/jackcess-1.2.8.jar
