@@ -1,5 +1,9 @@
 FROM geographica/gdal2:2.2.0
-    
+
+ RUN apt-get install -y \
+			unzip \
+			vim  \
+			wget 
 # openjdk
 COPY --from=openjdk:8-jdk  /usr/local/openjdk-8/ /usr/lib/jvm/java-1.8-openjdk/
 ENV LANG=C.UTF-8
