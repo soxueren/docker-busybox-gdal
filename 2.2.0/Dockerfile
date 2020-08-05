@@ -14,7 +14,7 @@ RUN mkdir -p  /gdal/gdal \
    &&   cd /gdal \
     && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz  -O - \
         | tar xz -C gdal --strip-components=1 \
-    && cd /gdal/gdal \    
+    && cd /gdal/gdal \
     && ./configure --prefix=/usr --without-libtool \
      --with-spatialite --with-pg --with-netcdf --with-geos \
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
@@ -36,7 +36,7 @@ RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/j
     && cd /gdal/gdal/swig/java  \
     && make \
     && make install  \
-    && ls /usr/lib
+    && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd ../.. \
     && rm -rf gdal
