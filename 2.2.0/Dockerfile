@@ -10,7 +10,7 @@ FROM osgeo/gdal:alpine-normal-v2.4.1 as builder
 # Setup build env for PROJ
 RUN apk add --no-cache wget curl unzip make libtool autoconf automake pkgconfig g++ sqlite sqlite-dev \
     swig
-
+ARG POPPLER_DEV=poppler-dev
 RUN apk add --no-cache \
     linux-headers \
     libstdc++ \
@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     zlib-dev zstd-dev \
     libjpeg-turbo-dev libpng-dev openjpeg-dev libwebp-dev expat-dev \
 #    py3-numpy-dev python3-dev py3-numpy \
-    poppler-dev  postgresql-dev \
+    ${POPPLER_DEV}  postgresql-dev \
     openexr-dev \
     libxml2-dev \
     && mkdir -p /build_thirdparty/usr/lib
@@ -225,19 +225,45 @@ RUN if test "${SPATIALITE_VERSION}" != ""; then ( \
 
 # Build GDAL
 ARG GDAL_VERSION=2.2.0
-RUN mkdir -p  /gdal/gdal \
+RUN export GDAL_EXTRA_ARGS="" \
+    && if test "${GEOS_VERSION}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-geos ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${XERCESC_VERSION}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-xerces ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${HDF4_VERSION}" != ""; then \
+        apk add --no-cache portablexdr-dev \
+        && export LDFLAGS="-lportablexdr ${LDFLAGS}" \
+        && export GDAL_EXTRA_ARGS="--with-hdf4 ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${HDF5_VERSION}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-hdf5 ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${NETCDF_VERSION}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-netcdf ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${SPATIALITE_VERSION}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-spatialite ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && if test "${POPPLER_DEV}" != ""; then \
+        export GDAL_EXTRA_ARGS="--with-poppler ${GDAL_EXTRA_ARGS}"; \
+    fi \
+    && echo ${GDAL_EXTRA_ARGS} \
+    && mkdir -p  /gdal/gdal \
     && cd /gdal \
     && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz  -O - \
         | tar xz -C gdal --strip-components=1 \
     && cd /gdal/gdal \
-    && ./configure --prefix=/usr --without-libtool \
-    --with-spatialite --with-pg --with-geos \
+    && ./configure --prefix=/usr --without-libtool \    
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
     --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
     --with-hide-internal-symbols \
     --with-proj=/usr \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
-    --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \   
+    --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \
+    ${GDAL_EXTRA_ARGS} \
+    --with-pg  \
     && make \
     && make install DESTDIR="/build"
 
