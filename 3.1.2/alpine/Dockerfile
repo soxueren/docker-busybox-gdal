@@ -359,7 +359,7 @@ RUN cd /gdal/gdal/swig/java  \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
     && cd /  \
-    && rm -rf gdal
+    && rm -rf gdal \
     && ls /gdal/gdal/swig/java  \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
