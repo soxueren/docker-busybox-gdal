@@ -98,7 +98,7 @@ RUN wget -q https://github.com/Unidata/netcdf-c/archive/v${NETCDF_VERSION}.tar.g
 
 ENV FREEXL_VERSION=1.0.5
 # Build freexl
-RUN wget -q http://www.gaia-gis.it/gaia-sins/freexl-${FREEXL_VERSION}.tar.gz \
+RUN wget -q http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${FREEXL_VERSION}.tar.gz \
     && tar xzf freexl-${FREEXL_VERSION}.tar.gz \
     && rm -f freexl-${FREEXL_VERSION}.tar.gz \
     && cd freexl-${FREEXL_VERSION} \
