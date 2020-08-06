@@ -358,7 +358,7 @@ RUN cd /gdal/gdal/swig/java  \
     && make install DESTDIR="/build" \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
-    && cd /gdal/gdal  \   
+    && ls /gdal/gdal/swig/java  \   
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
         echo "Uploading cache..."; \
