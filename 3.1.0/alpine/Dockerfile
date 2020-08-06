@@ -358,8 +358,6 @@ RUN cd /gdal/gdal/swig/java  \
     && make install DESTDIR="/build" \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
-    && cd /  \
-    && rm -rf gdal
     && cd /gdal/gdal  \   
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
