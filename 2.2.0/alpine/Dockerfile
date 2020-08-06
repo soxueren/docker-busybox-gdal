@@ -19,11 +19,11 @@ RUN apk add --no-cache \
     poppler-dev postgresql-dev swig
 
 # For spatialite (and GDAL)
-RUN apk add --no-cache libxml2-dev
+RUN apk add --no-cache libxml2-dev 
 
 # Build xerces-c
-ENV XERCESC_VERSION=3.2.2
-RUN wget -q http://mirror.ibcp.fr/pub/apache/xerces/c/3/sources/xerces-c-${XERCESC_VERSION}.zip \
+ENV XERCESC_VERSION=3.2.3
+RUN wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/xerces/c/3/sources/xerces-c-${XERCESC_VERSION}.zip  \
     && unzip -q xerces-c-${XERCESC_VERSION}.zip  \
     && rm -f xerces-c-${XERCESC_VERSION}.zip \
     && cd xerces-c-${XERCESC_VERSION} \
@@ -187,7 +187,7 @@ ENV PATH=$PATH:/usr/local/ant/bin
 ADD ./java.opt /gdal/gdal/swig/java/java.opt
 RUN cd /gdal/gdal/swig/java  \
     && make \
-    && make install \
+	&& make install \
     && make install DESTDIR="/build" \
     && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ 
