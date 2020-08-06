@@ -142,6 +142,23 @@ RUN wget -q http://www.gaia-gis.it/gaia-sins/libspatialite-${SPATIALITE_VERSION}
     && cd .. \
     && rm -rf libspatialite-${SPATIALITE_VERSION}
 	
+# openjdk
+COPY --from=openjdk:8-alpine  /usr/lib/jvm/java-1.8-openjdk/ /usr/lib/jvm/java-1.8-openjdk/
+ENV LANG=C.UTF-8
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+ENV PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+ENV JAVA_VERSION=8u212
+ENV JAVA_ALPINE_VERSION=8.212.04-r0
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
+
+# apache ant
+ARG ANT_VERSION=1.10.8
+RUN mkdir -p  /usr/local/ant  \
+        && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz -O - \
+        | tar xz -C /usr/local/ant --strip-components=1 \
+	&& chmod +x /usr/local/ant/bin/ant
+ENV ANT_HOME=/usr/local/ant
+ENV PATH=$PATH:/usr/local/ant/bin
 
 # Build GDAL
 ARG GDAL_VERSION=2.2.0
@@ -164,7 +181,7 @@ RUN mkdir -p  /gdal/gdal \
     --with-hdf5 \
     --with-poppler \
     --with-spatialite \	
-    --with-python \
+	--with-python \
     && make \
 	&& make install \
     && make install DESTDIR="/build"
@@ -175,14 +192,6 @@ RUN \
     && unzip -q -j -u -o proj-datumgrid-latest.zip  -d /build_projgrids/usr/share/proj \
     && rm -f *.zip
 
-# apache ant
-ARG ANT_VERSION=1.10.8
-RUN mkdir -p  /usr/local/ant  \
-        && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz -O - \
-        | tar xz -C /usr/local/ant --strip-components=1 \
-	&& chmod +x /usr/local/ant/bin/ant
-ENV ANT_HOME=/usr/local/ant
-ENV PATH=$PATH:/usr/local/ant/bin
 
 ADD ./java.opt /gdal/gdal/swig/java/java.opt
 RUN cd /gdal/gdal/swig/java  \
