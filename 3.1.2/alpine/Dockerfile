@@ -351,16 +351,15 @@ RUN if test "x${GDAL_BUILD_IS_RELEASE}" = "x"; then \
     && ls /build/usr/lib
 
 # build swig java  
-RUN echo -e 'JAVA_HOME = /usr/lib/jvm/java-1.8-openjdk' > /gdal/gdal/swig/java/java.opt \
-    && echo -e 'JAVADOC=$(JAVA_HOME)/bin/javadoc' >> /gdal/gdal/swig/java/java.opt \
-    && echo -e 'JAVAC=$(JAVA_HOME)/bin/javac' >> /gdal/gdal/swig/java/java.opt \
-    && echo -e 'JAVA=$(JAVA_HOME)/bin/java' >> /gdal/gdal/swig/java/java.opt \
-    && echo -e 'JAR=$(JAVA_HOME)/bin/jar' >> /gdal/gdal/swig/java/java.opt \
-    && echo -e 'JAVA_INCLUDE=-I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux' >> /gdal/gdal/swig/java/java.opt \
-    && cd /gdal/gdal/swig/java  \
+ADD ./java.opt /gdal/gdal/swig/java/java.opt
+RUN cd /gdal/gdal/swig/java  \
     && make \
+    && make install \
     && make install DESTDIR="/build" \
+    && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ \
+    && cd /  \
+    && rm -rf gdal
     && ls /gdal/gdal/swig/java  \
     && if test "${RSYNC_REMOTE}" != ""; then \
         ccache -s; \
