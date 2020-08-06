@@ -23,7 +23,7 @@ RUN apk add --no-cache libxml2-dev
 
 # Build xerces-c
 ENV XERCESC_VERSION=3.2.3
-RUN wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/xerces/c/3/sources/xerces-c-${XERCESC_VERSION}.zip  \
+RUN wget -q http://mirror.ibcp.fr/pub/apache/xerces/c/3/sources/xerces-c-${XERCESC_VERSION}.zip  \
     && unzip -q xerces-c-${XERCESC_VERSION}.zip  \
     && rm -f xerces-c-${XERCESC_VERSION}.zip \
     && cd xerces-c-${XERCESC_VERSION} \
@@ -164,7 +164,7 @@ RUN mkdir -p  /gdal/gdal \
     --with-hdf5 \
     --with-poppler \
     --with-spatialite \	
-	--with-python \
+    --with-python \
     && make \
 	&& make install \
     && make install DESTDIR="/build"
