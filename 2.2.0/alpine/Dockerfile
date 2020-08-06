@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     zlib-dev zstd-dev \
     libjpeg-turbo-dev libpng-dev openjpeg-dev libwebp-dev expat-dev \
     py-numpy-dev python2-dev py2-numpy \
-    poppler-dev postgresql-dev
+    poppler-dev postgresql-dev swig
 
 # For spatialite (and GDAL)
 RUN apk add --no-cache libxml2-dev
