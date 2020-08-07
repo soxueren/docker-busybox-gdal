@@ -4,7 +4,7 @@
 # This file is available at the option of the licensee under:
 # Public domain
 # or licensed under X/MIT (LICENSE.TXT) Copyright 2019 Even Rouault <even.rouault@spatialys.com>
-#osgeo/gdal:alpine-normal-v2.4.1
+#osgeo/gdal:alpine-small-v2.5.0RC1
 ARG ALPINE_VERSION=3.9
 FROM alpine:${ALPINE_VERSION} as builder
 # Setup build env for PROJ
@@ -161,10 +161,12 @@ RUN mkdir -p  /usr/local/ant  \
 ENV ANT_HOME=/usr/local/ant
 ENV PATH=$PATH:/usr/local/ant/bin
 
+# clean gdal 2.5
+RUN cd /usr/lib && rm -f libgdal* libogr* libosr*    
+    
 # Build GDAL
 ARG GDAL_VERSION=2.2.0
-RUN mkdir -p  /gdal/gdal \
-    && cd /gdal \
+RUN mkdir /gdal && cd / \
     && wget -q https://github.com/OSGeo/gdal/archive/v${GDAL_VERSION}.tar.gz  -O - \
         | tar xz -C gdal --strip-components=1 \
     && cd /gdal/gdal \
@@ -191,7 +193,6 @@ RUN \
     && curl -LOs http://download.osgeo.org/proj/proj-datumgrid-latest.zip \
     && unzip -q -j -u -o proj-datumgrid-latest.zip  -d /build_projgrids/usr/share/proj \
     && rm -f *.zip
-
 
 ADD ./java.opt /gdal/gdal/swig/java/java.opt
 RUN cd /gdal/gdal/swig/java  \
