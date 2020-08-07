@@ -5,7 +5,7 @@
 # Public domain
 # or licensed under X/MIT (LICENSE.TXT) Copyright 2019 Even Rouault <even.rouault@spatialys.com>
 #osgeo/gdal:alpine-normal-v2.4.1
-FROM osgeo/gdal:alpine-normal-v2.4.1 as builder
+FROM osgeo/gdal:alpine-small-v2.5.0RC1 as builder
 # Setup build env for PROJ
 RUN apk add --no-cache wget curl unzip -q make libtool autoconf automake pkgconfig g++ sqlite sqlite-dev
 
@@ -111,7 +111,7 @@ RUN wget -q http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${FREEXL_VERS
     && cd .. \
     && rm -rf freexl-${FREEXL_VERSION}
 
-ARG PROJ_VERSION=4.8.0
+ARG PROJ_VERSION=6.0.0
 # Build PROJ
 RUN mkdir proj \
     && wget -q https://github.com/OSGeo/PROJ/archive/${PROJ_VERSION}.tar.gz -O - \
@@ -173,17 +173,16 @@ RUN mkdir -p  /gdal/gdal \
     --with-libtiff=internal --with-rename-internal-libtiff-symbols \
     --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \    
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
-    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \	
-    --with-pg \	
+    --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
     --with-geos \
     --with-xerces \
     --with-netcdf \
     --with-hdf5 \
     --with-poppler \
     --with-spatialite \	
-	--with-python \
+    --with-python \
     && make \
-	&& make install \
+    && make install \
     && make install DESTDIR="/build"
 	
 RUN \
@@ -216,8 +215,7 @@ RUN cd /  \
 
 	   
 # Build final image
-ARG ALPINE_VERSION=3.6
-FROM alpine:${ALPINE_VERSION} as runner
+FROM osgeo/gdal:alpine-small-v2.5.0RC1 as runner
 
 RUN date
 
