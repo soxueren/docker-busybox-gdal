@@ -111,7 +111,7 @@ RUN wget -q http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${FREEXL_VERS
     && cd .. \
     && rm -rf freexl-${FREEXL_VERSION}
 
-ARG PROJ_VERSION=6.0.0
+ARG PROJ_VERSION=4.9.3
 # Build PROJ
 RUN mkdir proj \
     && wget -q https://github.com/OSGeo/PROJ/archive/${PROJ_VERSION}.tar.gz -O - \
