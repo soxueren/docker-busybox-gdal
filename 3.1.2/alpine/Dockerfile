@@ -142,7 +142,7 @@ RUN if test "${HDF4_VERSION}" != ""; then ( \
 # Build freexl
 ARG FREEXL_VERSION=1.0.5
 RUN if test "${FREEXL_VERSION}" != ""; then ( \
-    wget -q http://www.gaia-gis.it/gaia-sins/freexl-${FREEXL_VERSION}.tar.gz \
+    wget -q http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${FREEXL_VERSION}.tar.gz \
     && tar xzf freexl-${FREEXL_VERSION}.tar.gz \
     && rm -f freexl-${FREEXL_VERSION}.tar.gz \
     && cd freexl-${FREEXL_VERSION} \
