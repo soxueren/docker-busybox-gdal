@@ -78,7 +78,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
     --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \
     --with-java=/usr/lib/jvm/java-1.8-openjdk --with-jvm-lib=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server --with-mdb=yes \
     --with-jvm-lib-add-rpath=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server \
-    --enable-lto \
+    #--enable-lto \
     && make -j$(nproc) \
     && make install DESTDIR="/build" 
     
