@@ -124,6 +124,8 @@ RUN apk add --no-cache \
         sqlite-libs \
         libcurl \
         zlib zstd-libs\
+	ttf-dejavu \
+        fontconfig \
         libjpeg-turbo libpng openjpeg libwebp expat libpq \
     # libturbojpeg.so is not used by GDAL. Only libjpeg.so*
     && rm -f /usr/lib/libturbojpeg.so* \
