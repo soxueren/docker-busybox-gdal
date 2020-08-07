@@ -402,6 +402,8 @@ RUN apk add --no-cache \
         libcurl tiff \
         ttf-dejavu \
         zlib zstd-libs\
+	ttf-dejavu \
+        fontconfig \
         libjpeg-turbo libpng libwebp expat \
         python3 py3-numpy ${POPPLER} pcre libpq libxml2 portablexdr openjpeg \
         openexr \
