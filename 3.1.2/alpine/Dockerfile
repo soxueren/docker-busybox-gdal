@@ -400,8 +400,9 @@ RUN apk add --no-cache \
         libstdc++ \
         sqlite-libs \
         libcurl tiff \
+	fontconfig \
         ttf-dejavu \
-        zlib zstd-libs\
+        zlib zstd-libs\	        
         libjpeg-turbo libpng libwebp expat \
         python3 py3-numpy ${POPPLER} pcre libpq libxml2 portablexdr openjpeg \
         openexr \
