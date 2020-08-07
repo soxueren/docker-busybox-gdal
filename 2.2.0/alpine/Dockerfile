@@ -127,7 +127,7 @@ RUN mkdir proj \
     && for i in /build_proj/usr/lib/*; do strip -s $i 2>/dev/null || /bin/true; done \
     && for i in /build_proj/usr/bin/*; do strip -s $i 2>/dev/null || /bin/true; done
 
-ENV SPATIALITE_VERSION=4.3.0a
+ENV SPATIALITE_VERSION=4.3.0
 # Build spatialite
 RUN wget -q http://www.gaia-gis.it/gaia-sins/libspatialite-${SPATIALITE_VERSION}.tar.gz \
     && tar xzf libspatialite-${SPATIALITE_VERSION}.tar.gz \
