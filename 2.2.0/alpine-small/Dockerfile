@@ -5,6 +5,8 @@
 # Public domain
 # or licensed under X/MIT (LICENSE.TXT) Copyright 2019 Even Rouault <even.rouault@spatialys.com>
 
+#osgeo/gdal:alpine-small-v2.5.0RC1
+ARG ALPINE_VERSION=3.9
 FROM osgeo/gdal:alpine-small-v2.5.0RC1 as builder
 
 # Derived from osgeo/proj by Howard Butler <howard@hobu.co>
@@ -85,9 +87,7 @@ RUN if test "${GDAL_VERSION}" = "master"; then \
 ADD ./java.opt /gdal/gdal/swig/java/java.opt
 RUN cd /gdal/gdal/swig/java  \
     && make \
-	&& make install \
     && make install DESTDIR="/build" \
-    && ls /usr/lib \
     && cp /gdal/gdal/swig/java/*.jar /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext/ 
     
  RUN cd / \
@@ -115,7 +115,7 @@ RUN \
     && rm -f *.zip
 
 # Build final image
-FROM osgeo/gdal:alpine-small-v2.5.0RC1 as runner
+FROM alpine:${ALPINE_VERSION} as runner
 
 RUN date
 
