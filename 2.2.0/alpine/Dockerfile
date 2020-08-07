@@ -5,7 +5,8 @@
 # Public domain
 # or licensed under X/MIT (LICENSE.TXT) Copyright 2019 Even Rouault <even.rouault@spatialys.com>
 #osgeo/gdal:alpine-normal-v2.4.1
-FROM osgeo/gdal:alpine-small-v2.5.0RC1 as builder
+ARG ALPINE_VERSION=3.9
+FROM alpine:${ALPINE_VERSION} as builder
 # Setup build env for PROJ
 RUN apk add --no-cache wget curl unzip -q make libtool autoconf automake pkgconfig g++ sqlite sqlite-dev
 
@@ -214,8 +215,8 @@ RUN cd /  \
        ;do rm $i; done)
 
 	   
-# Build final image
-FROM osgeo/gdal:alpine-small-v2.5.0RC1 as runner
+ARG ALPINE_VERSION=3.9
+FROM alpine:${ALPINE_VERSION} as runner
 
 RUN date
 
