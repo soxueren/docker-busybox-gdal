@@ -21,6 +21,22 @@ RUN apk add --no-cache \
 # For spatialite (and GDAL)
 RUN apk add --no-cache libxml2-dev 
 
+ARG PROJ_VERSION=4.9.3
+# Build PROJ
+RUN mkdir proj \
+    && wget -q https://github.com/OSGeo/PROJ/archive/${PROJ_VERSION}.tar.gz -O - \
+        | tar xz -C proj --strip-components=1 \
+    && cd proj \
+    && ./autogen.sh \
+    && ./configure --prefix=/usr --disable-static --enable-lto \
+    && make -j$(nproc) \
+    && make install \
+    && make install DESTDIR="/build_proj" \
+    && cd .. \
+    && rm -rf proj \
+    && for i in /build_proj/usr/lib/*; do strip -s $i 2>/dev/null || /bin/true; done \
+    && for i in /build_proj/usr/bin/*; do strip -s $i 2>/dev/null || /bin/true; done
+    
 # Build xerces-c
 ENV XERCESC_VERSION=3.2.3
 RUN wget -q http://mirror.ibcp.fr/pub/apache/xerces/c/3/sources/xerces-c-${XERCESC_VERSION}.zip  \
@@ -111,23 +127,7 @@ RUN wget -q http://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${FREEXL_VERS
     && cd .. \
     && rm -rf freexl-${FREEXL_VERSION}
 
-ARG PROJ_VERSION=4.9.3
-# Build PROJ
-RUN mkdir proj \
-    && wget -q https://github.com/OSGeo/PROJ/archive/${PROJ_VERSION}.tar.gz -O - \
-        | tar xz -C proj --strip-components=1 \
-    && cd proj \
-    && ./autogen.sh \
-    && ./configure --prefix=/usr --disable-static --enable-lto \
-    && make -j$(nproc) \
-    && make install \
-    && make install DESTDIR="/build_proj" \
-    && cd .. \
-    && rm -rf proj \
-    && for i in /build_proj/usr/lib/*; do strip -s $i 2>/dev/null || /bin/true; done \
-    && for i in /build_proj/usr/bin/*; do strip -s $i 2>/dev/null || /bin/true; done
-
-ENV SPATIALITE_VERSION=4.3.0
+ENV SPATIALITE_VERSION=4.3.0a
 # Build spatialite
 RUN wget -q http://www.gaia-gis.it/gaia-sins/libspatialite-${SPATIALITE_VERSION}.tar.gz \
     && tar xzf libspatialite-${SPATIALITE_VERSION}.tar.gz \
@@ -164,7 +164,7 @@ ENV PATH=$PATH:/usr/local/ant/bin
 ARG GDAL_VERSION=2.2.0
 RUN mkdir -p  /gdal/gdal \
     && cd /gdal \
-    && wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz  -O - \
+    && wget -q https://github.com/OSGeo/gdal/archive/v${GDAL_VERSION}.tar.gz  -O - \
         | tar xz -C gdal --strip-components=1 \
     && cd /gdal/gdal \
     && ./configure --prefix=/usr --without-libtool \
