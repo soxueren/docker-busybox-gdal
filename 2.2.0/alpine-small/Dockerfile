@@ -20,7 +20,7 @@ RUN apk add --no-cache \
     zlib-dev zstd-dev \
     libjpeg-turbo-dev libpng-dev openjpeg-dev libwebp-dev expat-dev postgresql-dev swig
 
-ARG PROJ_VERSION=6.0.0
+ARG PROJ_VERSION=4.9.3
 
 # Build PROJ
 RUN mkdir proj \
